@@ -8,13 +8,15 @@
 //  buttons — do NOT add onclick in the HTML.
 // ============================================
 
-
 // ============================================
 //  WARM-UP: Shout It!
 // ============================================
 // When the user types text and clicks "Shout",
 // display the text in ALL CAPS with "!" at the end.
-
+document.getElementById("btnShout").addEventListener('click', function(){
+    const text = document.getElementById("shoutInput").value;
+    document.getElementById("outShout").innerHTML = text.toUpperCase() + "!";
+    });
 // STEP 1: Get the "Shout" button by its ID ("btnShout")
 //         using document.getElementById()
 
@@ -73,7 +75,49 @@
 //      Use .toFixed(2) to format the total.
 //      Example: "Alice, your total is $13.50"
 //      If name is empty, use "Customer" as the default.
+    document.getElementById("btnCalc").addEventListener("click", function() {
+    let sizePrice = 0;
+    const sizes = document.getElementsByName("rg");
 
+    for (let i = 0; i < sizes.length; i++) {
+        if (sizes[i].checked) {
+            sizePrice = parseFloat(sizes[i].value);
+        }
+    }
+
+    let toppingCount = 0;
+    const toppings = document.getElementsByName("cb");
+
+    for (let i = 0; i < toppings.length; i++) {
+        if (toppings[i].checked) {
+            toppingCount++;
+        }
+    }
+
+    let toppingPrice = toppingCount * 0.50;
+
+    const service = document.getElementById("serviceSelect").value;
+    let fee = 0;
+
+    if (service === "dinein") {
+        fee = 0;
+    } else if (service === "takeout") {
+        fee = 1.50;
+    } else if (service === "delivery") {
+        fee = 3.00;
+    }
+
+    const total = sizePrice + toppingPrice + fee;
+
+    let name = document.getElementById("myInput").value;
+
+    if (name === "") {
+        name = "Customer";
+    }
+
+    document.getElementById("myPara").innerHTML =
+        name + ", your total is $" + total.toFixed(2);
+});
 
 // STEP 4: Get the "Clear" button by ID ("clearBtn")
 //         Add a click event listener.
@@ -83,3 +127,16 @@
 //         c) Uncheck ALL topping checkboxes (loop through them)
 //         d) Set the service dropdown value to "dinein"
 //         e) Set the output paragraph innerHTML to ""
+document.getElementById("clearBtn").addEventListener("click", function() {
+    document.getElementById("myInput").value = "";
+    document.getElementById("r3").checked = true;
+
+    const toppings = document.getElementsByName("cb");
+
+    for (let i = 0; i < toppings.length; i++) {
+        toppings[i].checked = false;
+    }
+
+    document.getElementById("serviceSelect").value = "dinein";
+    document.getElementById("myPara").innerHTML = "";
+});
